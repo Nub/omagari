@@ -1,0 +1,14 @@
+[package]
+name = "omagari"
+version = "0.16.1"
+edition = "2024"
+
+[dependencies]
+bevy = "0.16.1"
+bevy_egui = "0.35.1"
+bevy_hanabi = { version="0.16.0", features=["3d", "serde"] }
+bevy_panorbit_camera = "0.27.0"
+rand = "0.9.1"
+regex = "1.11.1"
+ron = "0.8"
+serde = "1.0.219"
