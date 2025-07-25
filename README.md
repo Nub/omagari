@@ -5,7 +5,7 @@ Bevy-Hanabi 3D particle effects editor designed for the next version of https://
 
 
 ## Background
-I originally wrote this editor as an internal tool. Following requests from the Bevy community, I am now open-sourcing it.
+This editor was written as an internal tool for the development of hexroll3. Following requests by the Bevy community, it is now open-sourced as-is.
 
 ## Getting Started
 
@@ -34,14 +34,14 @@ cargo run --release
 
 ## Contributions
 
-Even though this code is not pristine, contributions are more than welcome, and showcasing your effects for others to learn from is highly encouraged.
+This could could use your care :) so contributions are more than welcome, and showcasing your effects for others to learn from is highly encouraged.
 
 ## License
 
 Similar to Hanabi, Omagari is dual-licensed under either:
 
-- MIT License ([`LICENSE-MIT`](./LICENSE-MIT) or <http://opensource.org/licenses/MIT>)
-- Apache License, Version 2.0 ([`LICENSE-APACHE2`](./LICENSE-APACHE2) or <http://www.apache.org/licenses/LICENSE-2.0>)
+- MIT License ([`LICENSE-MIT`](./LICENSE-MIT) 
+- Apache License, Version 2.0 ([`LICENSE-APACHE2`](./LICENSE-APACHE2)
 
 at your option.
 
