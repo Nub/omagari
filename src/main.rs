@@ -228,7 +228,7 @@ fn app_ui(
                                 }
                             }
                             if ui.button("+").clicked() {
-                                effects.push(NodeEffect::default());
+                                effects.push(EffectEditor::default());
                             }
                         });
                         ui.allocate_rect(ui.available_rect_before_wrap(), egui::Sense::hover());

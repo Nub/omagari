@@ -53,7 +53,7 @@ fn ui_for_modifiers_list<T, R>(
 }
 
 #[derive(Serialize, Deserialize)]
-pub enum NodeModifier {
+pub enum ModifierEditor {
     SetAttribute(SetAttributeModifierEditor),
     InheritAttribute(InheritAttributeModifierEditor),
     SetPositionCircle(SetPositionCircleModifierEditor),
@@ -67,77 +67,77 @@ pub enum NodeModifier {
     ConformToSphereModifier(ConformToSphereModifierEditor),
 }
 
-impl NodeModifier {
-    fn produce(&self, writer: &ExprWriter) -> LatentTypedNode {
+impl ModifierEditor {
+    fn produce(&self, writer: &ExprWriter) -> ProducedModifier {
         match self {
-            NodeModifier::SetPositionCircle(n) => {
-                LatentTypedNode::SetPositionCircle(n.produce(writer))
+            ModifierEditor::SetPositionCircle(n) => {
+                ProducedModifier::SetPositionCircle(n.produce(writer))
             }
-            NodeModifier::SetPositionSphere(n) => {
-                LatentTypedNode::SetPositionSphere(n.produce(writer))
+            ModifierEditor::SetPositionSphere(n) => {
+                ProducedModifier::SetPositionSphere(n.produce(writer))
             }
-            NodeModifier::SetVelocityCircle(n) => {
-                LatentTypedNode::SetVelocityCircle(n.produce(writer))
+            ModifierEditor::SetVelocityCircle(n) => {
+                ProducedModifier::SetVelocityCircle(n.produce(writer))
             }
-            NodeModifier::SetVelocitySphere(n) => {
-                LatentTypedNode::SetVelocitySphere(n.produce(writer))
+            ModifierEditor::SetVelocitySphere(n) => {
+                ProducedModifier::SetVelocitySphere(n.produce(writer))
             }
-            NodeModifier::SetVelocityTangent(n) => {
-                LatentTypedNode::SetVelocityTangent(n.produce(writer))
+            ModifierEditor::SetVelocityTangent(n) => {
+                ProducedModifier::SetVelocityTangent(n.produce(writer))
             }
-            NodeModifier::SetAttribute(n) => LatentTypedNode::SetAttribute(n.produce(writer)),
-            NodeModifier::InheritAttribute(n) => {
-                LatentTypedNode::InheritAttribute(n.produce(writer))
+            ModifierEditor::SetAttribute(n) => ProducedModifier::SetAttribute(n.produce(writer)),
+            ModifierEditor::InheritAttribute(n) => {
+                ProducedModifier::InheritAttribute(n.produce(writer))
             }
-            NodeModifier::AccelModifier(n) => LatentTypedNode::AccelModifier(n.produce(writer)),
-            NodeModifier::LinearDragModifier(n) => {
-                LatentTypedNode::LinearDragModifier(n.produce(writer))
+            ModifierEditor::AccelModifier(n) => ProducedModifier::AccelModifier(n.produce(writer)),
+            ModifierEditor::LinearDragModifier(n) => {
+                ProducedModifier::LinearDragModifier(n.produce(writer))
             }
-            NodeModifier::EmitSpawnEventModifier(n) => {
-                LatentTypedNode::EmitSpawnEventModifier(n.produce(writer))
+            ModifierEditor::EmitSpawnEventModifier(n) => {
+                ProducedModifier::EmitSpawnEventModifier(n.produce(writer))
             }
-            NodeModifier::ConformToSphereModifier(n) => {
-                LatentTypedNode::ConformToSphere(n.produce(writer))
+            ModifierEditor::ConformToSphereModifier(n) => {
+                ProducedModifier::ConformToSphere(n.produce(writer))
             }
         }
     }
 }
 
-impl UiProvider for NodeModifier {
+impl UiProvider for ModifierEditor {
     fn draw_ui(&mut self, app: &mut AppContext, ui: &mut egui::Ui, index: u64) {
         match self {
-            NodeModifier::SetPositionCircle(n) => n.draw_ui(app, ui, index),
-            NodeModifier::SetPositionSphere(n) => n.draw_ui(app, ui, index),
-            NodeModifier::SetVelocityCircle(n) => n.draw_ui(app, ui, index),
-            NodeModifier::SetVelocitySphere(n) => n.draw_ui(app, ui, index),
-            NodeModifier::SetVelocityTangent(n) => n.draw_ui(app, ui, index),
-            NodeModifier::SetAttribute(n) => n.draw_ui(app, ui, index),
-            NodeModifier::InheritAttribute(n) => n.draw_ui(app, ui, index),
-            NodeModifier::AccelModifier(n) => n.draw_ui(app, ui, index),
-            NodeModifier::LinearDragModifier(n) => n.draw_ui(app, ui, index),
-            NodeModifier::EmitSpawnEventModifier(n) => n.draw_ui(app, ui, index),
-            NodeModifier::ConformToSphereModifier(n) => n.draw_ui(app, ui, index),
+            ModifierEditor::SetPositionCircle(n) => n.draw_ui(app, ui, index),
+            ModifierEditor::SetPositionSphere(n) => n.draw_ui(app, ui, index),
+            ModifierEditor::SetVelocityCircle(n) => n.draw_ui(app, ui, index),
+            ModifierEditor::SetVelocitySphere(n) => n.draw_ui(app, ui, index),
+            ModifierEditor::SetVelocityTangent(n) => n.draw_ui(app, ui, index),
+            ModifierEditor::SetAttribute(n) => n.draw_ui(app, ui, index),
+            ModifierEditor::InheritAttribute(n) => n.draw_ui(app, ui, index),
+            ModifierEditor::AccelModifier(n) => n.draw_ui(app, ui, index),
+            ModifierEditor::LinearDragModifier(n) => n.draw_ui(app, ui, index),
+            ModifierEditor::EmitSpawnEventModifier(n) => n.draw_ui(app, ui, index),
+            ModifierEditor::ConformToSphereModifier(n) => n.draw_ui(app, ui, index),
         }
     }
 }
 
 #[derive(Serialize, Deserialize)]
-pub enum NodeRenderModifier {
+pub enum RenderModifierEditor {
     SizeOverLifetime(SizeOverLifetimeModifierEditor),
     ColorOverLifetime(ColorOverLifetimeModifierEditor),
 }
 
-impl UiProvider for NodeRenderModifier {
+impl UiProvider for RenderModifierEditor {
     fn draw_ui(&mut self, app: &mut AppContext, ui: &mut egui::Ui, index: u64) {
         match self {
-            NodeRenderModifier::SizeOverLifetime(n) => n.draw_ui(app, ui, index),
-            NodeRenderModifier::ColorOverLifetime(n) => n.draw_ui(app, ui, index),
+            RenderModifierEditor::SizeOverLifetime(n) => n.draw_ui(app, ui, index),
+            RenderModifierEditor::ColorOverLifetime(n) => n.draw_ui(app, ui, index),
         }
     }
 }
 
 #[derive(Serialize, Deserialize)]
-enum LatentTypedNode {
+enum ProducedModifier {
     SetVelocityTangent(SetVelocityTangentModifier),
     SetPositionSphere(SetPositionSphereModifier),
     SetPositionCircle(SetPositionCircleModifier),
@@ -152,18 +152,18 @@ enum LatentTypedNode {
 }
 
 #[derive(Serialize, Deserialize)]
-pub struct NodeEffect {
+pub struct EffectEditor {
     name: String,
     parent: Option<String>,
     capacity: u32,
     spawner_settings: SpawnerSettings,
     texture_index: Option<usize>,
-    init_modifiers: Vec<NodeModifier>,
-    update_modifiers: Vec<NodeModifier>,
-    render_modifiers: Vec<NodeRenderModifier>,
+    init_modifiers: Vec<ModifierEditor>,
+    update_modifiers: Vec<ModifierEditor>,
+    render_modifiers: Vec<RenderModifierEditor>,
 }
 
-impl UiProvider for NodeEffect {
+impl UiProvider for EffectEditor {
     fn draw_ui(&mut self, app: &mut AppContext, ui: &mut egui::Ui, index: u64) {
         let id = ui.make_persistent_id(format!("effect {}{}", self.name, index));
         ui.vertical(|ui| {
@@ -249,7 +249,7 @@ impl UiProvider for NodeEffect {
                         id,
                         |ui, list| {
                             if ui.button(SetAttributeModifierEditor::label()).clicked() {
-                                list.push(NodeModifier::SetAttribute(
+                                list.push(ModifierEditor::SetAttribute(
                                     SetAttributeModifierEditor::default(),
                                 ));
                             }
@@ -257,7 +257,7 @@ impl UiProvider for NodeEffect {
                                 .button(SetPositionCircleModifierEditor::label())
                                 .clicked()
                             {
-                                list.push(NodeModifier::SetPositionCircle(
+                                list.push(ModifierEditor::SetPositionCircle(
                                     SetPositionCircleModifierEditor::default(),
                                 ));
                             }
@@ -265,7 +265,7 @@ impl UiProvider for NodeEffect {
                                 .button(SetPositionSphereModifierEditor::label())
                                 .clicked()
                             {
-                                list.push(NodeModifier::SetPositionSphere(
+                                list.push(ModifierEditor::SetPositionSphere(
                                     SetPositionSphereModifierEditor::default(),
                                 ));
                             }
@@ -273,7 +273,7 @@ impl UiProvider for NodeEffect {
                                 .button(SetVelocityCircleModifierEditor::label())
                                 .clicked()
                             {
-                                list.push(NodeModifier::SetVelocityCircle(
+                                list.push(ModifierEditor::SetVelocityCircle(
                                     SetVelocityCircleModifierEditor::default(),
                                 ));
                             }
@@ -281,7 +281,7 @@ impl UiProvider for NodeEffect {
                                 .button(SetVelocitySphereModifierEditor::label())
                                 .clicked()
                             {
-                                list.push(NodeModifier::SetVelocitySphere(
+                                list.push(ModifierEditor::SetVelocitySphere(
                                     SetVelocitySphereModifierEditor::default(),
                                 ));
                             }
@@ -289,12 +289,12 @@ impl UiProvider for NodeEffect {
                                 .button(SetVelocityTangentModifierEditor::label())
                                 .clicked()
                             {
-                                list.push(NodeModifier::SetVelocityTangent(
+                                list.push(ModifierEditor::SetVelocityTangent(
                                     SetVelocityTangentModifierEditor::default(),
                                 ));
                             }
                             if ui.button(InheritAttributeModifierEditor::label()).clicked() {
-                                list.push(NodeModifier::InheritAttribute(
+                                list.push(ModifierEditor::InheritAttribute(
                                     InheritAttributeModifierEditor::default(),
                                 ));
                             }
@@ -308,22 +308,22 @@ impl UiProvider for NodeEffect {
                         id,
                         |ui, list| {
                             if ui.button(AccelModifierEditor::label()).clicked() {
-                                list.push(NodeModifier::AccelModifier(
+                                list.push(ModifierEditor::AccelModifier(
                                     AccelModifierEditor::default(),
                                 ));
                             }
                             if ui.button(LinearDragModifierEditor::label()).clicked() {
-                                list.push(NodeModifier::LinearDragModifier(
+                                list.push(ModifierEditor::LinearDragModifier(
                                     LinearDragModifierEditor::default(),
                                 ));
                             }
                             if ui.button(EmitSpawnEventModifierEditor::label()).clicked() {
-                                list.push(NodeModifier::EmitSpawnEventModifier(
+                                list.push(ModifierEditor::EmitSpawnEventModifier(
                                     EmitSpawnEventModifierEditor::default(),
                                 ));
                             }
                             if ui.button(ConformToSphereModifierEditor::label()).clicked() {
-                                list.push(NodeModifier::ConformToSphereModifier(
+                                list.push(ModifierEditor::ConformToSphereModifier(
                                     ConformToSphereModifierEditor::default(),
                                 ));
                             }
@@ -337,7 +337,7 @@ impl UiProvider for NodeEffect {
                         id,
                         |ui, list| {
                             if ui.button(SizeOverLifetimeModifierEditor::label()).clicked() {
-                                list.push(NodeRenderModifier::SizeOverLifetime(
+                                list.push(RenderModifierEditor::SizeOverLifetime(
                                     SizeOverLifetimeModifierEditor::default(),
                                 ));
                             }
@@ -345,7 +345,7 @@ impl UiProvider for NodeEffect {
                                 .button(ColorOverLifetimeModifierEditor::label())
                                 .clicked()
                             {
-                                list.push(NodeRenderModifier::ColorOverLifetime(
+                                list.push(RenderModifierEditor::ColorOverLifetime(
                                     ColorOverLifetimeModifierEditor::default(),
                                 ));
                             }
@@ -356,7 +356,7 @@ impl UiProvider for NodeEffect {
     }
 }
 
-impl NodeEffect {
+impl EffectEditor {
     pub fn name(&self) -> &str {
         self.name.as_str()
     }
@@ -369,13 +369,13 @@ impl NodeEffect {
     pub fn produce(&self) -> EffectAsset {
         let writer = ExprWriter::new();
 
-        let mut init_nodes: Vec<LatentTypedNode> = Vec::new();
-        let mut update_nodes: Vec<LatentTypedNode> = Vec::new();
+        let mut init_modifiers: Vec<ProducedModifier> = Vec::new();
+        let mut update_modifiers: Vec<ProducedModifier> = Vec::new();
         for m in self.init_modifiers.iter() {
-            init_nodes.push(m.produce(&writer));
+            init_modifiers.push(m.produce(&writer));
         }
         for m in self.update_modifiers.iter() {
-            update_nodes.push(m.produce(&writer));
+            update_modifiers.push(m.produce(&writer));
         }
 
         let texture_slot = writer.lit(0u32).expr();
@@ -387,55 +387,55 @@ impl NodeEffect {
             .with_alpha_mode(bevy_hanabi::AlphaMode::Blend)
             .with_name(&self.name);
 
-        for x in init_nodes {
-            match x {
-                LatentTypedNode::SetVelocityTangent(z) => {
-                    e = e.init(z);
+        for modifier_wrapper in init_modifiers {
+            match modifier_wrapper {
+                ProducedModifier::SetVelocityTangent(modifier) => {
+                    e = e.init(modifier);
                 }
-                LatentTypedNode::SetPositionCircle(z) => {
-                    e = e.init(z);
+                ProducedModifier::SetPositionCircle(modifier) => {
+                    e = e.init(modifier);
                 }
-                LatentTypedNode::SetPositionSphere(z) => {
-                    e = e.init(z);
+                ProducedModifier::SetPositionSphere(modifier) => {
+                    e = e.init(modifier);
                 }
-                LatentTypedNode::SetAttribute(z) => {
-                    e = e.init(z);
+                ProducedModifier::SetAttribute(modifier) => {
+                    e = e.init(modifier);
                 }
-                LatentTypedNode::InheritAttribute(z) => {
-                    e = e.init(z);
+                ProducedModifier::InheritAttribute(modifier) => {
+                    e = e.init(modifier);
                 }
-                LatentTypedNode::SetVelocityCircle(z) => {
-                    e = e.init(z);
+                ProducedModifier::SetVelocityCircle(modifier) => {
+                    e = e.init(modifier);
                 }
-                LatentTypedNode::SetVelocitySphere(z) => {
-                    e = e.init(z);
-                }
-                _ => {}
-            }
-        }
-
-        for x in update_nodes {
-            match x {
-                LatentTypedNode::AccelModifier(z) => {
-                    e = e.update(z);
-                }
-                LatentTypedNode::LinearDragModifier(z) => {
-                    e = e.update(z);
-                }
-                LatentTypedNode::EmitSpawnEventModifier(z) => {
-                    e = e.update(z);
-                }
-                LatentTypedNode::ConformToSphere(z) => {
-                    e = e.update(z);
+                ProducedModifier::SetVelocitySphere(modifier) => {
+                    e = e.init(modifier);
                 }
                 _ => {}
             }
         }
 
-        for x in self.render_modifiers.iter() {
-            match x {
-                NodeRenderModifier::SizeOverLifetime(m) => e = e.render(m.produce()),
-                NodeRenderModifier::ColorOverLifetime(m) => e = e.render(m.produce()),
+        for modifier_wrapper in update_modifiers {
+            match modifier_wrapper {
+                ProducedModifier::AccelModifier(modifier) => {
+                    e = e.update(modifier);
+                }
+                ProducedModifier::LinearDragModifier(modifier) => {
+                    e = e.update(modifier);
+                }
+                ProducedModifier::EmitSpawnEventModifier(modifier) => {
+                    e = e.update(modifier);
+                }
+                ProducedModifier::ConformToSphere(modifier) => {
+                    e = e.update(modifier);
+                }
+                _ => {}
+            }
+        }
+
+        for editor_wrapper in self.render_modifiers.iter() {
+            match editor_wrapper {
+                RenderModifierEditor::SizeOverLifetime(editor) => e = e.render(editor.produce()),
+                RenderModifierEditor::ColorOverLifetime(editor) => e = e.render(editor.produce()),
             }
         }
 
@@ -447,9 +447,9 @@ impl NodeEffect {
     }
 }
 
-impl Default for NodeEffect {
+impl Default for EffectEditor {
     fn default() -> Self {
-        NodeEffect {
+        EffectEditor {
             name: "Name your effect".to_string(),
             parent: None,
             capacity: 16384,

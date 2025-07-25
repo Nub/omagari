@@ -13,7 +13,7 @@ use crate::{effect::*, AppContext};
 
 #[derive(Resource, Serialize, Deserialize, Default)]
 pub struct OmagariProject {
-    pub effects: Vec<NodeEffect>,
+    pub effects: Vec<EffectEditor>,
 }
 
 #[derive(Resource, Serialize, Deserialize, Default)]
