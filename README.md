@@ -34,7 +34,7 @@ cargo run --release
 
 ## Contributions
 
-This could could use your care :) so contributions are more than welcome, and showcasing your effects for others to learn from is highly encouraged.
+This code could use your care :) so contributions are more than welcome, and [showcasing](https://github.com/hexroll/omagari/discussions/1) your effects for others to learn from is highly encouraged.
 
 ## License
 
