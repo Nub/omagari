@@ -34,7 +34,7 @@ impl From<OmagariProject> for OmagariBundle {
                 .effects
                 .iter()
                 .map(|e| OmagariEffect {
-                    texture_asset: "assets/effects/cloud2.png".to_string(),
+                    texture_asset: "effects/cloud2.png".to_string(),
                     effect: e.produce(),
                 })
                 .collect(),
