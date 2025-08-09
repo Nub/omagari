@@ -34,6 +34,7 @@ impl From<OmagariProject> for OmagariBundle {
                 .effects
                 .iter()
                 .map(|e| OmagariEffect {
+                    texture_asset: "assets/effects/cloud2.png".to_string(),
                     effect: e.produce(),
                 })
                 .collect(),
@@ -42,7 +43,7 @@ impl From<OmagariProject> for OmagariBundle {
 }
 
 pub struct OmagariEffect {
-    // texture_asset: String,
+    pub texture_asset: String,
     pub effect: EffectAsset,
     // For setting parenting for hanabi
     // is_child: bool,
