@@ -8,25 +8,16 @@ use bevy::{
 use bevy_panorbit_camera::{PanOrbitCamera, PanOrbitCameraPlugin};
 
 use bevy_egui::{
-    egui::{self, scroll_area::ScrollBarVisibility, Layout},
     EguiContext, EguiContexts, EguiGlobalSettings, EguiPlugin, EguiPrimaryContextPass,
     PrimaryEguiContext,
+    egui::{self, Layout, scroll_area::ScrollBarVisibility},
 };
 use bevy_hanabi::prelude::*;
 use ron::ser::PrettyConfig;
 use std::fs::File;
 use std::io::Write;
 
-mod controller;
-mod effect;
-mod expr;
-mod helpers;
-mod modifiers;
-
-use crate::controller::*;
-use crate::effect::*;
-use crate::expr::*;
-use crate::helpers::*;
+use omagari::editor_prelude::*;
 
 fn main() {
     App::new()
@@ -78,13 +69,6 @@ fn setup(
     });
 }
 
-#[derive(Default)]
-struct AppContext {
-    expr_clipboard: Option<ExprWriterEditor>,
-    visible_effects: Vec<String>,
-    filename: Option<String>,
-}
-
 fn app_ui(
     mut commands: Commands,
     mut contexts: EguiContexts,
@@ -128,10 +112,6 @@ fn app_ui(
                         );
                     }
 
-                    if ui.button("🖭 EXPORT").clicked() {
-                        export_effects_to_files(&filename, project.clone());
-                    }
-
                     ui.add_space(10.0);
                     ui.separator();
                     ui.add_space(10.0);
@@ -158,7 +138,7 @@ fn app_ui(
                     ui.menu_button("⮉ LOAD", |ui| {
                         for f in projects_list() {
                             if ui.button(f.clone()).clicked() {
-                                if let Ok(project) = load_project(&f) {
+                                if let Ok(project) = OmagariProject::load(&f) {
                                     commands.insert_resource(project);
                                     res.context.filename = Some(f.clone());
                                     ui.close_menu();
