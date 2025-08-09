@@ -58,6 +58,8 @@ pub mod prelude {
 }
 
 pub mod editor_prelude {
+    use std::path::PathBuf;
+
     pub use super::controller::*;
     pub use super::effect::*;
     pub use super::expr::*;
@@ -72,6 +74,6 @@ pub mod editor_prelude {
     pub struct AppContext {
         pub expr_clipboard: Option<ExprWriterEditor>,
         pub visible_effects: Vec<String>,
-        pub filename: Option<String>,
+        pub filename: Option<PathBuf>,
     }
 }

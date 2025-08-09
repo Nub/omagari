@@ -54,22 +54,6 @@ pub fn spawn_particle_effects(
     }
 }
 
-pub fn projects_list() -> Vec<String> {
-    let mut files = Vec::new();
-    let entries = std::fs::read_dir(".").unwrap();
-    for entry in entries {
-        let entry = entry.unwrap();
-        let filename = entry.file_name();
-        if filename.to_string_lossy().ends_with(".omagari.ron") {
-            files.push(filename.to_string_lossy().into_owned());
-        }
-    }
-    files
-}
-
-pub fn validate_project_filename(filename: &str) -> bool {
-    regex::Regex::new(r".*\.omagari\.ron")
-        .unwrap()
-        .captures(&filename)
-        .is_some()
+pub fn validate_project_filename<P: AsRef<std::path::Path>>(p: P) -> bool {
+    p.as_ref().ends_with("omagari.ron")
 }

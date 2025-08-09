@@ -92,9 +92,9 @@ fn app_ui(
     let mut filename = res
         .context
         .filename
-        .as_ref()
-        .unwrap_or(&"".to_string())
-        .clone();
+        .clone()
+        .map(|x| x.display().to_string())
+        .unwrap_or(String::new());
 
     egui::TopBottomPanel::top("Toolbar")
         .resizable(false)
@@ -128,7 +128,7 @@ fn app_ui(
                     }
 
                     filename_textedit.show(ui);
-                    res.context.filename = Some(filename.clone());
+                    res.context.filename = Some(std::path::PathBuf::from(&filename));
 
                     if ui.button("🌌 NEW").clicked() {
                         res.context.filename = None;
@@ -136,13 +136,16 @@ fn app_ui(
                     }
 
                     ui.menu_button("⮉ LOAD", |ui| {
-                        for f in projects_list() {
-                            if ui.button(f.clone()).clicked() {
-                                if let Ok(project) = OmagariProject::load(&f) {
-                                    commands.insert_resource(project);
-                                    res.context.filename = Some(f.clone());
-                                    ui.close_menu();
-                                }
+                        let files = rfd::FileDialog::new()
+                            .add_filter("omagari", &["omagari.ron"])
+                            .set_directory(".")
+                            .pick_file();
+
+                        if let Some(path) = files {
+                            if let Ok(project) = OmagariProject::load(&path) {
+                                commands.insert_resource(project);
+                                res.context.filename = Some(path.clone());
+                                ui.close_menu();
                             }
                         }
                     });
@@ -156,7 +159,7 @@ fn app_ui(
                         )
                         .unwrap();
 
-                        if let Ok(mut file) = File::create(filename) {
+                        if let Ok(mut file) = File::create(&filename) {
                             file.write_all(ron_string.as_bytes()).unwrap();
                         }
                     }
